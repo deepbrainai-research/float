@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
+
+  
+  <title>FLOAT</title>
+  <style>
+    *{
+    font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    }
+
+    .embed-responsive {
+    position: relative;
+    overflow: hidden; /* 넘치는 부분 숨기기 */
+    }
+
+    .embed-responsive-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* 비디오가 잘리지 않게 비율을 유지하며 화면에 맞게 조정 */
+    }
+  
+    video {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      }
+
+    /* 왼쪽 버튼 커스텀 */
+    .custom-control-prev {
+      position: absolute;
+      left: -250px; /* 캐러셀 외부로 이동 */
+      top: 50%;    /* 수직 중앙 정렬 */
+      transform: translateY(-50%);
+      z-index: 5;  /* 캐러셀 위로 올림 */
+    }
+
+    /* 오른쪽 버튼 커스텀 */
+    .custom-control-next {
+      position: absolute;
+      right: -250px; /* 캐러셀 외부로 이동 */
+      top: 50%;     /* 수직 중앙 정렬 */
+      transform: translateY(-50%);
+      z-index: 5;   /* 캐러셀 위로 올림 */
+    }
+    .carousel-item video {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .carousel-control-prev {
+    position: absolute;
+    left: -50px; /* 화면 밖으로 이동 */
+    top: 50%;    /* 수직 중앙 정렬 */
+    transform: translateY(-50%);
+    z-index: 10;
+    font-size: 30px;  /* 글자 크기 증가 */
+    width: 60px;      /* 버튼 크기 증가 */
+    height: 60px;     /* 버튼 크기 증가 */
+    background-color: rgba(0, 0, 0, 0.5); /* 배경 색 */
+    color: white;     /* 글자 색 */
+    border-radius: 50%;  /* 둥근 모양 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* 오른쪽 버튼 */
+  .carousel-control-next {
+    position: absolute;
+    right: -50px; /* 화면 밖으로 이동 */
+    top: 50%;     /* 수직 중앙 정렬 */
+    transform: translateY(-50%);
+    z-index: 10;
+    font-size: 30px;  /* 글자 크기 증가 */
+    width: 60px;      /* 버튼 크기 증가 */
+    height: 60px;     /* 버튼 크기 증가 */
+    background-color: rgba(0, 0, 0, 0.5); /* 배경 색 */
+    color: white;     /* 글자 색 */
+    border-radius: 50%;  /* 둥근 모양 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* 버튼 호버 효과 */
+  .carousel-control-prev:hover, .carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* 버튼 호버시 더 어두운 배경 */
+  }
+
+  </style>
+
+</head>
+
+<body>
+  <div class="container">
+    <br>
+    <div style="text-align: center;">  
+      <h1>FLOAT</h1>
+      <h3> Generative Motion Latent Flow Matching for Audio-driven Talking Portrait</h3>
+      <div style="margin-top: 15px;">
+        <span style="margin-right: 15px; font-size: 1.3em;"><a href="https://taekyungki.github.io" target="_blank">Taekyung Ki<sup>1</sup></a></span>
+        <span style="margin-right: 15px; font-size: 1.3em;"><a href="https://kevinmin95.github.io" target="_blank">Dongchan Min<sup>2</sup></a></span>
+        <span style="margin-right: 15px; font-size: 1.3em;"><a href="https://www.aistudios.com/ko/home" target="_blank">Gyeongsu Chae<sup>1</sup></a></span>
+      </div>
+      <div style="margin-top: 15px;">
+        <span style="margin-right: 20px; font-size: 1.2em;"><sup>1</sup>DeepBrain AI Inc.</span>
+        <span style="margin-right: 20px; font-size: 1.2em;"><sup>2</sup>Graduate School of AI, KAIST</span>
+      </div>
+      <div>
+        <span style="margin-right: 10px; font-size: 1.3em;"> ArXiv 2024</span>
+      </div>
+    </div>
+    <div class="text-center" style="font-size: 1.5em; margin-top: 25px;">
+      <a class="btn btn-primary btn-lg" target="_blank"
+        href="" role="button"
+        style="margin-right: 10px; margin-bottom: 10px;">Paper</a>
+      <a class="btn btn-primary btn-lg" target="_blank"
+        href="" role="button"
+        style="margin-right: 10px; margin-bottom: 10px;">Video</a>
+      <a class="btn btn-primary btn-lg" target="_blank"
+        href="" role="button"
+        style="margin-right: 10px;  margin-bottom: 10px;">Arxiv</a>
+      <a class="btn btn-primary btn-lg" target="_blank"
+        href="" role="button"
+        style="margin-bottom: 10px;">Code (Soon)</a>
+    </div>
+
+    <div style="margin-top: 30px;">
+      <h2 class="text-center">
+        Abstract
+      </h2>
+      <img src="./src/img/float-abstract.png" alt="" style="display: block; margin: 10 auto; width: 90%;">
+      <br>
+      <p style="font-style: italic; margin-bottom: 5px;">
+        With the rapid advancement of diffusion-based generative models, portrait image animation has achieved remarkable results.
+        However, it still faces challenges in temporally consistent video generation and fast sampling due to its iterative sampling nature.
+        This paper presents FLOAT, an audio-driven talking portrait video generation method based on flow matching generative model.
+        We shift the generative modeling from the pixel-based latent space to a learned motion latent space, enabling efficient design of temporally consistent motion.
+        To achieve this, we introduce a transformer-based vector field predictor with a simple yet effective frame-wise conditioning mechanism.
+        Additionally, our method supports speech-driven emotion enhancement, enabling a natural incorporation of expressive motions.
+        Extensive experiments demonstrate that our method outper- forms state-of-the-art audio-driven talking portrait methods in terms of visual quality, motion fidelity, and efficiency.
+      </p>
+      <p style="font-size: 1.2em; margin-top: 0px;">
+        <span style="font-weight: bold;">TL;DR:</span> FLOAT is a flow matching based audio-driven talking portrait video generation method.</h4>
+      </p>
+    </div>
+
+
+    <div style="margin-top: 50px;">
+      <div class="text-center">
+        <h2>
+          Method Overview
+        </h2>
+        <img src="./src/img/overview.png" width=100% class="img-fluid" alt="Responsive image">
+      </div>
+      <!-- <div style="margin-top: 35px;">
+        <p>
+          NeRF optimizes the reconstruction loss for a given set of input images (<span class="text-primary">blue
+            cameras</span>).
+          For sparse inputs, however, this leads to degenerate solutions.
+          In this work, we propose to sample unobserved views (<span class="text-danger">red cameras</span>) and <span
+            style="font-weight: bold;"> regularize the geometry and appearance of patches</span> rendered from those
+          views.
+          More specifically, we cast rays through the scene and render patches from unobserved viewpoints for a given
+          radiance field f.
+          We then regularize appearance by feeding the predicted RGB patches through a trained normalizing flow model
+          phi
+          and maximizing predicted log-likelihood.
+          We regularize geometry by enforcing a smoothness loss on the rendered depth patches.
+          Further, we avoid divergence at early stages of optimization by annealing the scene sampling space ofter the first iterations.
+          Our approach leads to 3D-consistent representations <span style="font-weight: bold;">even for sparse input
+            scenarios with as few as 3 input views</span> from which realistic novel views can be rendered.
+        </p>
+      </div> -->
+    </div>
+
+    <div style="margin-top:50px;">
+      <!-- <h2 class="text-center">
+        Results
+      </h2>
+      <h4>Comparison with State-of-the-art methods</h4>
+
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <video class="d-block w-100" controls playsinline>
+            <source src="./src/video/sota_comparison_01.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+
+        </div>
+        <div class="carousel-item">
+          <video class="d-block w-100" controls playsinline >
+            <source src="./src/video/sota_comparison_02.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="carousel-item">
+          <video class="d-block w-100" controls playsinline>
+            <source src="./src/video/sota_comparison_03.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div class="carousel-item">
+          <video class="d-block w-100" controls playsinline>
+            <source src="./src/video/sota_comparison_04.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+
+        <div class="carousel-item">
+          <video class="d-block w-100" controls playsinline>
+            <source src="./src/video/sota_comparison_05.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 gallery">
+          <div class="embed-responsive embed-responsive-21by9">
+            <video controls loop muted autoplay class="embed-responsive-item" width="100%">
+              <source src="src/video/ablation_phase1_facial_component_perceptual_loss.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div> -->
+
+      
+      <div>
+        <h2 class="text-center" style="margin-top: 30px;">
+          Homepage Template
+        </h2>
+        <p>
+          If you want to use this fully-responsive and easy-to-adapt homepage template, you can download it from <a href="https://github.com/m-niemeyer/regnerf" target="_blank">the github repository</a>.
+        </p>
+      </div>
+
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+      <script>
+        $(document).ready(function () {
+          $('#carouselExampleControls').carousel({
+            interval: false
+          });
+        });
+      </script>
+
+</body>
+
+</html>
