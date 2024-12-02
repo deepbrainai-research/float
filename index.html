@@ -21,20 +21,20 @@
     outline: none;
     }
     .video-container {
-    display: flex; /* Flexbox를 사용해 비디오를 가로로 배치 */
-    gap: 10px; /* 비디오 간의 간격을 10px로 설정 */
-    justify-content: center; /* 비디오를 화면 가운데 정렬 */
+    display: flex;
+    gap: 10px;
+    justify-content: center;
   }
 
   .video-container video {
-    width: 100%; /* 비디오가 부모 컨테이너 크기에 맞게 조정 */
-    max-width: 365px; /* 각 비디오의 최대 너비를 제한 */
-    height: auto; /* 원본 비율 유지 */
+    width: 100%;
+    max-width: 365px;
+    height: auto;
   }
 
     .embed-responsive {
     position: relative;
-    overflow: hidden; /* 넘치는 부분 숨기기 */
+    overflow: hidden;
     }
 
     .embed-responsive-item {
@@ -43,7 +43,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain; /* 비디오가 잘리지 않게 비율을 유지하며 화면에 맞게 조정 */
+      object-fit: contain;
     }
   
     video {
@@ -52,97 +52,89 @@
       display: block;
       }
 
-    /* 버튼 스타일 */
     .btn-primary {
-      background-color: navy;       /* 배경 색상 */
-      border-color: navy;          /* 테두리 색상 */
-      color: white;                /* 글씨 색상 */
+      background-color: navy;
+      border-color: navy;
+      color: white;
     }
     .btn-primary:hover {
-      background-color: #004080;   /* hover 시 배경 색상 */
-      border-color: #004080;       /* hover 시 테두리 색상 */
+      background-color: #004080;
+      border-color: #004080;
     }
 
-    /* 하이퍼링크 스타일 */
     a {
-      color: navy;                 /* 기본 하이퍼링크 색상 */
-      text-decoration: none;        /* 밑줄 제거 */
-      padding: 5px 10px;           /* 여백 추가 (옵션) */
-      border-radius: 5px;          /* 모서리 둥글게 */
+      color: navy;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 5px;
     }
     a:hover {
-      color: #004080;              /* hover 시 하이퍼링크 색상 */
+      color: #004080;
     }
 
-    /* 왼쪽 버튼 커스텀 */
     .custom-control-prev {
       position: absolute;
-      left: -250px; /* 캐러셀 외부로 이동 */
-      top: 50%;    /* 수직 중앙 정렬 */
+      left: -250px; 
+      top: 50%;  
       transform: translateY(-50%);
-      z-index: 5;  /* 캐러셀 위로 올림 */
+      z-index: 5; 
     }
 
-    /* 오른쪽 버튼 커스텀 */
     .custom-control-next {
       position: absolute;
-      right: -250px; /* 캐러셀 외부로 이동 */
-      top: 50%;     /* 수직 중앙 정렬 */
+      right: -250px; 
+      top: 50%;  
       transform: translateY(-50%);
-      z-index: 5;   /* 캐러셀 위로 올림 */
+      z-index: 5;  
     }
     .carousel-item video {
       max-width: 100%;
       height: auto;
     }
 
-
-  /* 왼쪽 버튼 */
-  .carousel-control-prev {
+    .carousel-control-prev {
     position: absolute;
-    left: -50px; /* 화면 밖으로 이동 */
-    top: 50%;    /* 수직 중앙 정렬 */
+    left: -50px; 
+    top: 50%;   
     transform: translateY(-50%);
     z-index: 10;
-    font-size: 30px;  /* 글자 크기 증가 */
-    width: 60px;      /* 버튼 크기 증가 */
-    height: 60px;     /* 버튼 크기 증가 */
-    background-color: rgba(0, 0, 0, 0.5); /* 배경 색 */
-    color: white;     /* 글자 색 */
-    border-radius: 50%;  /* 둥근 모양 */
+    font-size: 30px;
+    width: 60px;    
+    height: 60px;   
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;    
+    border-radius: 50%;  
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  /* 오른쪽 버튼 */
   .carousel-control-next {
     position: absolute;
-    right: -50px; /* 화면 밖으로 이동 */
-    top: 50%;     /* 수직 중앙 정렬 */
+    right: -50px; 
+    top: 50%;    
     transform: translateY(-50%);
     z-index: 10;
-    font-size: 30px;  /* 글자 크기 증가 */
-    width: 60px;      /* 버튼 크기 증가 */
-    height: 60px;     /* 버튼 크기 증가 */
-    background-color: rgba(0, 0, 0, 0.5); /* 배경 색 */
-    color: white;     /* 글자 색 */
-    border-radius: 50%;  /* 둥근 모양 */
+    font-size: 30px;
+    width: 60px;    
+    height: 60px;   
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;     
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .video-fit {
-    width: 100%; /* 가로 길이를 캐러셀에 맞춤 */
-    height: auto; /* 원래 비율 유지 */
-    max-height: calc(100vh - 100px); /* 세로 크기를 화면 높이에 맞춤 (옵션) */
-    object-fit: contain; /* 비율 유지하며 내용이 잘리지 않도록 설정 */
+    width: 100%;
+    height: auto;
+    max-height: calc(100vh - 100px); 
+    object-fit: contain; 
   }
 
-  /* 버튼 호버 효과 */
   .carousel-control-prev:hover, .carousel-control-next:hover {
-    background-color: rgba(0, 0, 0, 0.8); /* 버튼 호버시 더 어두운 배경 */
+    background-color: rgba(0, 0, 0, 0.8);
   }  
   </style>
 
@@ -511,8 +503,9 @@
           Acknowledgement
         </h2>
         <p>
-          The source images and audio are collected from internet and other baselines, such as SadTalker, EMO, VASA-1, Hallo, LivePortrait, Loopy, etc.
-          We appreciate their great contributions in this field. This project page is based on the project page of <a href="https://m-niemeyer.github.io/regnerf">RegNeRF</a>. You can easily use it from <a href="https://github.com/m-niemeyer/regnerf" target="_blank">the github repository</a>.
+          The source images and audio are collected from the internet and other baselines, such as SadTalker, EMO, VASA-1, Hallo, LivePortrait, Loopy, and others.
+          We appreciate their valuable contributions to this field.
+          This project page is based on the project page of <a href="https://m-niemeyer.github.io/regnerf">RegNeRF</a>. You can easily use it from <a href="https://github.com/m-niemeyer/regnerf" target="_blank">the github repository</a>.
         </p>
       </div>
       <br>
@@ -534,17 +527,14 @@
           const videos = carousel.querySelectorAll('video');
         
           videos.forEach(video => {
-            // 영상 재생 시작 시 캐러셀 정지
             video.addEventListener('play', () => {
               $(carousel).carousel('pause');
             });
         
-            // 영상 재생 중지 시 캐러셀 재활성화
             video.addEventListener('pause', () => {
               $(carousel).carousel('cycle');
             });
         
-            // 영상이 끝났을 때 캐러셀 재활성화
             video.addEventListener('ended', () => {
               $(carousel).carousel('cycle');
             });
@@ -552,25 +542,20 @@
         </script>
 
         <script>
-          // 모든 캐러셀 선택
           const carousels = document.querySelectorAll('.carousel');
           
           carousels.forEach(carousel => {
-            // 해당 캐러셀의 모든 비디오 태그 선택
+
             const videos = carousel.querySelectorAll('video');
 
             videos.forEach(video => {
-              // 영상 재생 시작 시 해당 캐러셀 정지
               video.addEventListener('play', () => {
                 $(carousel).carousel('pause');
               });
-
-              // 영상 재생 중지 시 해당 캐러셀 재활성화
               video.addEventListener('pause', () => {
                 $(carousel).carousel('cycle');
               });
 
-              // 영상이 끝났을 때 해당 캐러셀 재활성화
               video.addEventListener('ended', () => {
                 $(carousel).carousel('cycle');
               });
