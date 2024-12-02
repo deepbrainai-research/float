@@ -20,6 +20,17 @@
     margin: 0;
     outline: none;
     }
+    .video-container {
+    display: flex; /* Flexbox를 사용해 비디오를 가로로 배치 */
+    gap: 10px; /* 비디오 간의 간격을 10px로 설정 */
+    justify-content: center; /* 비디오를 화면 가운데 정렬 */
+  }
+
+  .video-container video {
+    width: 100%; /* 비디오가 부모 컨테이너 크기에 맞게 조정 */
+    max-width: 365px; /* 각 비디오의 최대 너비를 제한 */
+    height: auto; /* 원본 비율 유지 */
+  }
 
     .embed-responsive {
     position: relative;
@@ -40,6 +51,28 @@
       height: auto;
       display: block;
       }
+
+    /* 버튼 스타일 */
+    .btn-primary {
+      background-color: navy;       /* 배경 색상 */
+      border-color: navy;          /* 테두리 색상 */
+      color: white;                /* 글씨 색상 */
+    }
+    .btn-primary:hover {
+      background-color: #004080;   /* hover 시 배경 색상 */
+      border-color: #004080;       /* hover 시 테두리 색상 */
+    }
+
+    /* 하이퍼링크 스타일 */
+    a {
+      color: navy;                 /* 기본 하이퍼링크 색상 */
+      text-decoration: none;        /* 밑줄 제거 */
+      padding: 5px 10px;           /* 여백 추가 (옵션) */
+      border-radius: 5px;          /* 모서리 둥글게 */
+    }
+    a:hover {
+      color: #004080;              /* hover 시 하이퍼링크 색상 */
+    }
 
     /* 왼쪽 버튼 커스텀 */
     .custom-control-prev {
@@ -63,7 +96,9 @@
       height: auto;
     }
 
-    .carousel-control-prev {
+
+  /* 왼쪽 버튼 */
+  .carousel-control-prev {
     position: absolute;
     left: -50px; /* 화면 밖으로 이동 */
     top: 50%;    /* 수직 중앙 정렬 */
@@ -98,11 +133,17 @@
     align-items: center;
   }
 
+  .video-fit {
+    width: 100%; /* 가로 길이를 캐러셀에 맞춤 */
+    height: auto; /* 원래 비율 유지 */
+    max-height: calc(100vh - 100px); /* 세로 크기를 화면 높이에 맞춤 (옵션) */
+    object-fit: contain; /* 비율 유지하며 내용이 잘리지 않도록 설정 */
+  }
+
   /* 버튼 호버 효과 */
   .carousel-control-prev:hover, .carousel-control-next:hover {
     background-color: rgba(0, 0, 0, 0.8); /* 버튼 호버시 더 어두운 배경 */
-  }
-
+  }  
   </style>
 
 </head>
@@ -129,13 +170,13 @@
     <div class="text-center" style="font-size: 1.5em; margin-top: 25px;">
       <a class="btn btn-primary btn-lg" target="_blank"
         href="" role="button"
-        style="margin-right: 10px; margin-bottom: 10px;">Paper</a>
+        style="margin-right: 10px; margin-bottom: 10px;">Paper (Soon)</a>
       <a class="btn btn-primary btn-lg" target="_blank"
         href="" role="button"
-        style="margin-right: 10px; margin-bottom: 10px;">Video</a>
-      <a class="btn btn-primary btn-lg" target="_blank"
+        style="margin-right: 10px; margin-bottom: 10px;">Video (Soon)</a>
+      <!-- <a class="btn btn-primary btn-lg" target="_blank"
         href="" role="button"
-        style="margin-right: 10px;  margin-bottom: 10px;">Arxiv</a>
+        style="margin-right: 10px;  margin-bottom: 10px;">Arxiv</a> -->
       <a class="btn btn-primary btn-lg" target="_blank"
         href="" role="button"
         style="margin-bottom: 10px;">Code (Soon)</a>
@@ -145,7 +186,7 @@
       <h2 class="text-center">
         Abstract
       </h2>
-      <img src="./src/img/float-abstract.png" alt="" style="display: block; margin: 10 auto; width: 90%;">
+      <img src="./src/img/float-abstract.png" alt="" style="display: block; margin: 10px auto; width: 90%;">
       <br>
       <p style="font-style: italic; margin-bottom: 5px;">
         With the rapid advancement of diffusion-based generative models, portrait image animation has achieved remarkable results.
@@ -154,10 +195,10 @@
         We shift the generative modeling from the pixel-based latent space to a learned motion latent space, enabling efficient design of temporally consistent motion.
         To achieve this, we introduce a transformer-based vector field predictor with a simple yet effective frame-wise conditioning mechanism.
         Additionally, our method supports speech-driven emotion enhancement, enabling a natural incorporation of expressive motions.
-        Extensive experiments demonstrate that our method outper- forms state-of-the-art audio-driven talking portrait methods in terms of visual quality, motion fidelity, and efficiency.
+        Extensive experiments demonstrate that our method outperforms state-of-the-art audio-driven talking portrait methods in terms of visual quality, motion fidelity, and efficiency.
       </p>
       <p style="font-size: 1.2em; margin-top: 0px;">
-        <span style="font-weight: bold;">TL;DR:</span> FLOAT is a flow matching based audio-driven talking portrait video generation method.</h4>
+        <span style="font-weight: bold;">TL;DR:</span> FLOAT is a flow matching based audio-driven talking portrait video generation method, enable to enhance the speech-driven emotional motion.</h4>
       </p>
     </div>
 
@@ -168,107 +209,315 @@
           Method Overview
         </h2>
         <img src="./src/img/overview.png" width=100% class="img-fluid" alt="Responsive image">
-        <h3> Under Construction...</h3>
       </div>
-      <!-- <div style="margin-top: 35px;">
+      <div style="margin-top: 35px;">
         <p>
-          NeRF optimizes the reconstruction loss for a given set of input images (<span class="text-primary">blue
-            cameras</span>).
-          For sparse inputs, however, this leads to degenerate solutions.
-          In this work, we propose to sample unobserved views (<span class="text-danger">red cameras</span>) and <span
-            style="font-weight: bold;"> regularize the geometry and appearance of patches</span> rendered from those
-          views.
-          More specifically, we cast rays through the scene and render patches from unobserved viewpoints for a given
-          radiance field f.
-          We then regularize appearance by feeding the predicted RGB patches through a trained normalizing flow model
-          phi
-          and maximizing predicted log-likelihood.
-          We regularize geometry by enforcing a smoothness loss on the rendered depth patches.
-          Further, we avoid divergence at early stages of optimization by annealing the scene sampling space ofter the first iterations.
-          Our approach leads to 3D-consistent representations <span style="font-weight: bold;">even for sparse input
-            scenarios with as few as 3 input views</span> from which realistic novel views can be rendered.
+          Audio-driven talking portrait aims to synthesize talking portrait videos using a single source portrait image and driving audio.
+          FLOAT is built upon a motion latent auto-encoder that encodes the given portrait image into an (<span class="text-danger">identity-motion</span>) latent representation.
+          We generates audio-conditioned talking portrait motion latents through the flow matching (with optimal transport trajectories).
+          To enhace the naturalness of generated talking motion, we incorporate the speech-driven emotion labels (&#128512;), providing a natural approach of emotion-aware talking portrait motion generation. 
         </p>
-      </div> -->
+      </div>
     </div>
 
     <div style="margin-top:50px;">
-      <!-- <h2 class="text-center">
-        Results
-      </h2>
-      <h4>Comparison with State-of-the-art methods</h4>
-
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <video class="d-block w-100" controls playsinline>
-            <source src="./src/video/sota_comparison_01.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-
-        </div>
-        <div class="carousel-item">
-          <video class="d-block w-100" controls playsinline >
-            <source src="./src/video/sota_comparison_02.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div class="carousel-item">
-          <video class="d-block w-100" controls playsinline>
-            <source src="./src/video/sota_comparison_03.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-        <div class="carousel-item">
-          <video class="d-block w-100" controls playsinline>
-            <source src="./src/video/sota_comparison_04.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-
-        <div class="carousel-item">
-          <video class="d-block w-100" controls playsinline>
-            <source src="./src/video/sota_comparison_05.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-
+      <h2 class="text-center"> Results </h2>
+      <br>
+      <h4> Results with Out-of-distribution Datas</h4>
+      <p> FLOAT can generate realistic talking portrait videos using OOD portrait images and audio. </p>
+      
+      <div class="video-container">
+        <video controls>
+          <source src="src/video/ood_musk.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <video controls>
+          <source src="src/video/ood_chinese.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <video controls>
+          <source src="src/video/ood_monarisa.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       </div>
-      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
+      <br>
+      <div class="video-container">
+        <video controls>
+          <source src="src/video/ood_hinton.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <video controls>
+          <source src="src/video/ood_altman.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <video controls>
+          <source src="src/video/ood_paint.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <br>
+      <div class="video-container">
+        <video controls>
+          <source src="src/video/ood_feifei.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <video controls>
+          <source src="src/video/ood_taylor.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <video controls>
+          <source src="src/video/ood_paint_angy.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
 
 
+      <br><br>
+      <h4>Emotion Redirection</h4>
+      <p> Since FLOAT is trained with speech-driven emotion labels, it can re-direct the emotion of the talking portrait during the inference phase.
+      Specifically, we can manipulate the predicted speech-driven emotion label with a simple one-hot emotion label, which can be further refined through classifier-free vector fields.
+      This enables users to refine emotion even when the driving speech conveys ambiguious or mixed emotions. </p>
+    
       <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12 gallery">
-          <div class="embed-responsive embed-responsive-21by9">
-            <video controls loop muted autoplay class="embed-responsive-item" width="100%">
-              <source src="src/video/ablation_phase1_facial_component_perceptual_loss.mp4" type="video/mp4">
+          <div class="col-md-12 col-sm-12 col-xs-12 gallery">
+            <div style="position: relative; padding-top: 0; overflow: hidden;">
+              <video controls style="display: block; width: 100%; height: auto;">
+                <source src="src/video/emotion_redirection_1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <br>
+            <div style="position: relative; padding-top: 0; overflow: hidden;">
+              <video controls style="display: block; width: 100%; height: auto;">
+                <source src="src/video/emotion_redirection_2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+
+      <br><br>
+      <h4>Comparison with State-of-the-art Methods</h4>
+      <p> We compare with state-of-the-art non-diffusion-based methods and diffusion-based methods.
+        For non-diffusion-based methods, we choose SadTalker and EDTalk.
+        For diffusion-based methods, we choose AniTalker, Hallo, and EchoMimic.</p>
+          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <video class="d-block w-100 video-fit" controls playsinline>
+                  <source src="./src/video/sota_comparison_01.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+
+              </div>
+              <div class="carousel-item">
+                <video class="d-block w-100 video-fit" controls playsinline >
+                  <source src="./src/video/sota_comparison_02.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="carousel-item">
+                <video class="d-block w-100 video-fit" controls playsinline>
+                  <source src="./src/video/sota_comparison_03.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+              <div class="carousel-item">
+                <video class="d-block w-100 video-fit" controls playsinline>
+                  <source src="./src/video/sota_comparison_04.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+              <div class="carousel-item">
+                <video class="d-block w-100 video-fit" controls playsinline>
+                  <source src="./src/video/sota_comparison_05.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+
+    
+      <br>
+      <br>
+      <h4>Ablation Studies on Frame-wise AdaLN and Flow Matching</h4>
+      <p> We conduct ablation studies on frame-wise AdaLN (and gating) and flow matching. For frame-wise AdaLN (and gating), we compare it with cross-attention mechanism,
+          which is widely used in conditional generation. For flow matching, we compare it with two types of diffusion models (\epsilon-prediction and \x_0 prediction).
+          We observe that frame-wise AdaLN (and gating) can generate more diverse head motions than cross-attention.
+          We also observe that flow mathcing can generate more temporally consistent videos with accurate lip-synchronization than diffusion models.
+      </p>
+      <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <video class="d-block w-100 video-fit" controls playsinline>
+              <source src="./src/video/ablation_phase2_architecture_1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+
+          </div>
+          <div class="carousel-item">
+            <video class="d-block w-100 video-fit" controls playsinline >
+              <source src="./src/video/ablation_phase2_architecture_2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="carousel-item">
+            <video class="d-block w-100 video-fit" controls playsinline>
+              <source src="./src/video/ablation_phase2_architecture_3.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="carousel-item">
+            <video class="d-block w-100 video-fit" controls playsinline>
+              <source src="./src/video/ablation_phase2_architecture_4.mp4" type="video/mp4">
+              Your browser does not support the video tag.
             </video>
           </div>
         </div>
-      </div> -->
 
-      
+        <a class="carousel-control-prev" href="#carouselExampleControls1" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls1" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+      <br><br>
+      <h4> Different Number of Function Evaluations (NFEs)</h4>
+      <p> The small number of function evaluations (NFEs) affects temporal consistency. This is because we generate the motion latents, not the content itself.
+          FLOAT is capable of generating reasonable video results with approximately 10 NFEs </p>
+      <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <video class="d-block w-100 video-fit" controls playsinline>
+              <source src="./src/video/ablation_phase2_NFE_1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="carousel-item">
+            <video class="d-block w-100 video-fit" controls playsinline >
+              <source src="./src/video/ablation_phase2_NFE_2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls2" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls2" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+      <br>
+      <br>
+      <h4>Emotion Guidance Scales</h4>
+      <p> We can control the intensity of the emotion by adjusting the emotion guidance scale.
+      Note that the predicted speech-driven emotion label is <b>Disgust</b> with a 99.99% probability. </p>
+      <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12 gallery">
+            <div style="position: relative; padding-top: 0; overflow: hidden;">
+              <video controls style="display: block; width: 100%; height: auto;">
+                <source src="src/video/ablation_phase2_emotion-guidance.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+
+      <br>
+      <br>
+      <h4>Additional Driving Conditions</h4>
+      <p> We also investigate another types of driving conditions, such as 3DMM head pose parameters, to improve the controllability and naturalness.
+          Here, 3DPose, S2E, and I2E are 3DMM head pose parameters, Speech-to-emotion label, and Image-to-emotion label, resepctively.
+      </p>
+      <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12 gallery">
+            <div style="position: relative; padding-top: 0; overflow: hidden;">
+              <video controls style="display: block; width: 100%; height: auto;">
+                <source src="src/video/driving_condition_01.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <br>
+            <div style="position: relative; padding-top: 0; overflow: hidden;">
+              <video controls style="display: block; width: 100%; height: auto;">
+                <source src="src/video/driving_condition_02.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+
+    <br>
+    <br>
+    <h4>Ablation Study on Facial Component Perceptual Loss in Phase 1</h4>
+    <p> The proposed facial component perceptual loss for the motion latent auto-encoder
+      significantly improves visual quality (e.g., teeth and eyes), as well as fine-grained motion (e.g., eyeball movement and lip motion).</p>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 gallery">
+          <div style="position: relative; padding-top: 0; overflow: hidden;">
+            <video controls muted style="display: block; width: 100%; height: auto;">
+              <source src="src/video/ablation_phase1_facial_component_perceptual_loss.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+      <br>
+
+      <div>
+        <h2 class="text-center" style="margin-top: 30px;">
+          Citation
+        </h2>
+        <p>
+          If you want to cite our work, please use:
+        </p>
+        <pre>
+          TBA
+          <!-- @InProceedings{Niemeyer2021Regnerf,
+          author    = {Michael Niemeyer and Jonathan T. Barron and Ben Mildenhall and Mehdi S. M. Sajjadi and Andreas Geiger and Noha Radwan},  
+          title     = {RegNeRF: Regularizing Neural Radiance Fields for View Synthesis from Sparse Inputs},
+          booktitle = {Proc. IEEE Conf. on Computer Vision and Pattern Recognition (CVPR)},
+          year      = {2022},
+        } -->
+      </pre>
+      </div>
+
+
+
       <div>
         <h2 class="text-center" style="margin-top: 30px;">
           Acknowledgement
         </h2>
         <p>
-          If you want to use this fully-responsive and easy-to-adapt homepage template, you can download it from <a href="https://github.com/m-niemeyer/regnerf" target="_blank">the github repository</a>.
+          The source images and audio are collected from internet and other baselines, such as SadTalker, EMO, VASA-1, Hallo, LivePortrait, Loopy, etc.
+          We appreciate their great contributions in this field. This project page is based on the project page of <a href="https://m-niemeyer.github.io/regnerf">RegNeRF</a>. You can easily use it from <a href="https://github.com/m-niemeyer/regnerf" target="_blank">the github repository</a>.
         </p>
       </div>
-
-      <!-- Optional JavaScript -->
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <br>
+      <br>
+      <br>
 
 
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -280,13 +529,54 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-      <script>
-        $(document).ready(function () {
-          $('#carouselExampleControls').carousel({
-            interval: false
+        <script>
+          const carousel = document.querySelector('#carouselExampleControls');
+          const videos = carousel.querySelectorAll('video');
+        
+          videos.forEach(video => {
+            // 영상 재생 시작 시 캐러셀 정지
+            video.addEventListener('play', () => {
+              $(carousel).carousel('pause');
+            });
+        
+            // 영상 재생 중지 시 캐러셀 재활성화
+            video.addEventListener('pause', () => {
+              $(carousel).carousel('cycle');
+            });
+        
+            // 영상이 끝났을 때 캐러셀 재활성화
+            video.addEventListener('ended', () => {
+              $(carousel).carousel('cycle');
+            });
           });
-        });
-      </script>
+        </script>
+
+        <script>
+          // 모든 캐러셀 선택
+          const carousels = document.querySelectorAll('.carousel');
+          
+          carousels.forEach(carousel => {
+            // 해당 캐러셀의 모든 비디오 태그 선택
+            const videos = carousel.querySelectorAll('video');
+
+            videos.forEach(video => {
+              // 영상 재생 시작 시 해당 캐러셀 정지
+              video.addEventListener('play', () => {
+                $(carousel).carousel('pause');
+              });
+
+              // 영상 재생 중지 시 해당 캐러셀 재활성화
+              video.addEventListener('pause', () => {
+                $(carousel).carousel('cycle');
+              });
+
+              // 영상이 끝났을 때 해당 캐러셀 재활성화
+              video.addEventListener('ended', () => {
+                $(carousel).carousel('cycle');
+              });
+            });
+          });
+        </script>
 
 </body>
 
