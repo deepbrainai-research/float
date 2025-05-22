@@ -383,8 +383,9 @@ class ToRGB(nn.Module):
 
 
 class ToFlow(nn.Module):
-    def __init__(self, in_channel, style_dim, upsample=True, blur_kernel=[1, 3, 3, 1]):
+    def __init__(self, in_channel, style_dim, upsample=True, blur_kernel=[1, 3, 3, 1], device=None):
         super().__init__()
+        self.device = device
 
         if upsample:
             self.upsample = Upsample(blur_kernel)
@@ -401,7 +402,7 @@ class ToFlow(nn.Module):
         xs = np.meshgrid(xs, xs)
         xs = np.stack(xs, 2)
 
-        xs = torch.tensor(xs, requires_grad=False).float().unsqueeze(0).repeat(input.size(0), 1, 1, 1).cuda()
+        xs = torch.tensor(xs, requires_grad=False).float().unsqueeze(0).repeat(input.size(0), 1, 1, 1).to(self.device)
 
         if skip is not None:
             skip = self.upsample(skip)
@@ -435,8 +436,9 @@ class Direction(nn.Module):
 
 
 class Synthesis(nn.Module):
-    def __init__(self, size, style_dim, motion_dim, blur_kernel=[1, 3, 3, 1], channel_multiplier=1):
+    def __init__(self, size, style_dim, motion_dim, blur_kernel=[1, 3, 3, 1], channel_multiplier=1, device=None):
         super(Synthesis, self).__init__()
+        self.device = device
 
         self.size = size
         self.style_dim = style_dim
@@ -478,7 +480,7 @@ class Synthesis(nn.Module):
             self.convs.append(StyledConv(out_channel, out_channel, 3, style_dim, blur_kernel=blur_kernel))
             self.to_rgbs.append(ToRGB(out_channel, style_dim))
 
-            self.to_flows.append(ToFlow(out_channel, style_dim))
+            self.to_flows.append(ToFlow(out_channel, style_dim, device=self.device))
 
             in_channel = out_channel
 

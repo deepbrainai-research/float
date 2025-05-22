@@ -15,6 +15,14 @@ from models.float.FLOAT import FLOAT
 from options.base_options import BaseOptions
 
 
+if torch.backends.mps.is_available() and torch.backends.mps.is_built():
+    selected_device = torch.device("mps")
+    print("Using MPS device (Mac M-series).")
+else:
+    selected_device = torch.device("cpu")
+    print("Using CPU device.")
+
+
 class DataProcessor:
 	def __init__(self, opt):
 		self.opt = opt
@@ -22,7 +30,7 @@ class DataProcessor:
 		self.sampling_rate = opt.sampling_rate
 		self.input_size = opt.input_size
 
-		self.fa = face_alignment.FaceAlignment(face_alignment.LandmarksType.TWO_D, flip_input=False)
+		self.fa = face_alignment.FaceAlignment(face_alignment.LandmarksType.TWO_D, flip_input=False, device=str(self.opt.device))
 
 		# wav2vec2 audio preprocessor
 		self.wav2vec_preprocessor = Wav2Vec2FeatureExtractor.from_pretrained(opt.wav2vec_model_path, local_files_only=True)
@@ -76,14 +84,13 @@ class DataProcessor:
 
 class InferenceAgent:
 	def __init__(self, opt):
-		torch.cuda.empty_cache()
 		self.opt = opt
-		self.rank = opt.rank
+		self.device = opt.device
 		
 		# Load Model
 		self.load_model()
-		self.load_weight(opt.ckpt_path, rank=self.rank)
-		self.G.to(self.rank)
+		self.load_weight(opt.ckpt_path, rank=self.device) # rank argument here is now device
+		self.G.to(self.device)
 		self.G.eval()
 
 		# Load Data Processor
@@ -97,7 +104,7 @@ class InferenceAgent:
 		with torch.no_grad():
 			for model_name, model_param in self.G.named_parameters():
 				if model_name in state_dict:
-					model_param.copy_(state_dict[model_name].to(rank))
+					model_param.copy_(state_dict[model_name].to(self.device))
 				elif "wav2vec2" in model_name: pass
 				else:
 					print(f"! Warning; {model_name} not found in state_dict.")
@@ -181,7 +188,7 @@ class InferenceOptions(BaseOptions):
 
 if __name__ == '__main__':
 	opt = InferenceOptions().parse()
-	opt.rank, opt.ngpus  = 0,1
+	opt.device = selected_device
 	agent = InferenceAgent(opt)
 	os.makedirs(opt.res_dir, exist_ok = True)
 

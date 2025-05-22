@@ -47,10 +47,24 @@ conda activate FLOAT
 sh environments.sh
 
 # or manual installation
-pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
+# For manual installation, please install PyTorch by following the instructions on the
+# official PyTorch website (https://pytorch.org/get-started/locally/) for your specific
+# OS and compute platform (CPU, MPS, or CUDA if available).
 pip install -r requirements.txt
 ```
-- Test on Linux, A100 GPU, and V100 GPU.
+- Tested on Linux (with NVIDIA GPUs) and macOS (Mac M-series with MPS, and CPU). The code is designed to be compatible with CPU-only systems as well.
+
+### Running on Mac M-series (MPS)
+The model can be run on Mac M-series computers (e.g., M1, M2, M3 chips) using PyTorch's Metal Performance Shaders (MPS) backend. However, there are a few considerations:
+
+- **Unsupported Operation**: As of the current PyTorch versions, the `torch.linalg.qr` operation is not implemented for the MPS backend. This operation is used by the `face-alignment` library, a dependency of this project. You can track the status of this PyTorch issue here: [pytorch/pytorch#141287](https://github.com/pytorch/pytorch/issues/141287).
+- **Workaround**: To enable the code to run on MPS devices, you must set the `PYTORCH_ENABLE_MPS_FALLBACK=1` environment variable. This allows PyTorch to fall back to the CPU for operations not supported on MPS. While this enables the code to run, the CPU fallback for `torch.linalg.qr` might result in slower performance during the face detection/alignment steps.
+
+To run the generation script with the MPS fallback enabled, use the following command:
+```bash
+PYTORCH_ENABLE_MPS_FALLBACK=1 python generate.py [your_other_arguments]
+```
+Replace `[your_other_arguments]` with the desired arguments for `generate.py` as described in the sections below. Note that CUDA-specific commands like `CUDA_VISIBLE_DEVICES=0` are not applicable when using MPS and should be omitted. You should also ensure you have a version of PyTorch that supports MPS (generally, recent versions do). Please refer to the official PyTorch "Get Started" page for MPS installation instructions.
 
 ### Preparing checkpoints
 
@@ -101,7 +115,7 @@ pip install -r requirements.txt
    
     You can generate a video with an emotion from audio without specifying `--emo`. You can adjust the intensity of the emotion using `--e_cfg_scale` (default 1). For more emotion intensive video, try large value from 5 to 10 for `--e_cfg_scale`. 
     ```.bash
-    CUDA_VISIBLE_DEVICES=0 python generate.py
+    python generate.py \
         --ref_path path/to/reference/image \
         --aud_path path/to/audio \
         --seed 15 \
@@ -114,7 +128,7 @@ pip install -r requirements.txt
 2. Generate video 2 (Redirecting Emotion)
     You can generate a video of other emotion by specifying `--emo`. It supports seven basic emotions: ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']. You can adjust the intensity of the emotion using `--e_cfg_scale` (default 1). For more emotion intensive video, try large value from 5 to 10 for `--e_cfg_scale`.
     ```.bash
-    CUDA_VISIBLE_DEVICES=0 python generate.py\
+    python generate.py \
         --ref_path path/to/reference/image \ 
         --aud_path path/to/audio \
         --emo 'happy' \             # Seven emotions ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise'] 
@@ -130,7 +144,7 @@ pip install -r requirements.txt
 
 3. Running example and results
     ```.bash
-    CUDA_VISIBLE_DEVICES=0 python generate.py \
+    python generate.py \
         --ref_path assets/sam_altman.webp \ 
         --aud_path assets/aud-sample-vs-1.wav \
         --seed  15 \ 

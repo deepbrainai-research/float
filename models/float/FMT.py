@@ -223,7 +223,7 @@ class FlowMatchingTransformer(BaseModel):
 		self.initialize_weights()		
 
 		# define alignment mask
-		alignment_mask = enc_dec_mask(self.num_total_frames, self.num_total_frames, 1, expansion=opt.attention_window).to(opt.rank)
+		alignment_mask = enc_dec_mask(self.num_total_frames, self.num_total_frames, 1, expansion=opt.attention_window).to(opt.device)
 		self.register_buffer('alignment_mask', alignment_mask)
 
 

@@ -17,13 +17,14 @@ from models.float.FMT import FlowMatchingTransformer
 class FLOAT(BaseModel):
 	def __init__(self, opt):
 		super().__init__()
+		self.device = opt.device
 		self.opt = opt
 
 		self.num_frames_for_clip = int(self.opt.wav2vec_sec * self.opt.fps)
 		self.num_prev_frames = int(self.opt.num_prev_frames)
 
 		# motion latent auto-encoder
-		self.motion_autoencoder = Generator(size = opt.input_size, style_dim = opt.dim_w, motion_dim = opt.dim_m)
+		self.motion_autoencoder = Generator(size = opt.input_size, style_dim = opt.dim_w, motion_dim = opt.dim_m, device=self.device)
 		self.motion_autoencoder.requires_grad_(False)
 
 		# condition encoders
@@ -82,10 +83,10 @@ class FLOAT(BaseModel):
 		B = a.shape[0]
 
 		# make time 
-		time = torch.linspace(0, 1, self.opt.nfe, device=self.opt.rank)
+		time = torch.linspace(0, 1, self.opt.nfe, device=self.device)
 		
 		# encoding audio first with whole audio
-		a = a.to(self.opt.rank)
+		a = a.to(self.device)
 		T = math.ceil(a.shape[-1] * self.opt.fps / self.opt.sampling_rate)
 		wa = self.audio_encoder.inference(a, seq_len=T)
 
@@ -101,15 +102,15 @@ class FLOAT(BaseModel):
 		for t in range(0, int(math.ceil(T / self.num_frames_for_clip))):
 			if self.opt.fix_noise_seed:
 				seed = self.opt.seed if seed is None else seed	
-				g = torch.Generator(self.opt.rank)
+				g = torch.Generator(self.device)
 				g.manual_seed(seed)
-				x0 = torch.randn(B, self.num_frames_for_clip, self.opt.dim_w, device = self.opt.rank, generator = g)
+				x0 = torch.randn(B, self.num_frames_for_clip, self.opt.dim_w, device = self.device, generator = g)
 			else:
-				x0 = torch.randn(B, self.num_frames_for_clip, self.opt.dim_w, device = self.opt.rank)
+				x0 = torch.randn(B, self.num_frames_for_clip, self.opt.dim_w, device = self.device)
 
 			if t == 0: # should define the previous
-				prev_x_t = torch.zeros(B, self.num_prev_frames, self.opt.dim_w).to(self.opt.rank)
-				prev_wa_t = torch.zeros(B, self.num_prev_frames, self.opt.dim_w).to(self.opt.rank)
+				prev_x_t = torch.zeros(B, self.num_prev_frames, self.opt.dim_w, device=self.device)
+				prev_wa_t = torch.zeros(B, self.num_prev_frames, self.opt.dim_w, device=self.device)
 			else:
 				prev_x_t = sample_t[:, -self.num_prev_frames:]
 				prev_wa_t = wa_t[:, -self.num_prev_frames:]
@@ -156,7 +157,7 @@ class FLOAT(BaseModel):
 	) -> dict:
 
 		s, a = data['s'], data['a']
-		s_r, r_s_lambda, s_r_feats = self.encode_image_into_latent(s.to(self.opt.rank))
+		s_r, r_s_lambda, s_r_feats = self.encode_image_into_latent(s.to(self.device))
 		if 's_r' in data:
 			r_s = self.encode_identity_into_motion(s_r)
 		else:
