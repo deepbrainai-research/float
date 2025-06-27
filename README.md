@@ -1,4 +1,4 @@
-# FLOAT: Generative Motion Latent Flow Matching for Audio-driven Talking Portrait
+# [ICCV 2025] FLOAT: Generative Motion Latent Flow Matching for Audio-driven Talking Portrait
 Official Pytorch Implementation of FLOAT; Flow Matching for Audio-driven Talking Portrait Video Generation
 
 ![preview](./assets/float-abstract.png)
@@ -8,7 +8,7 @@ Official Pytorch Implementation of FLOAT; Flow Matching for Audio-driven Talking
 
 Project Page: https://deepbrainai-research.github.io/float/
 
-**Abstract**: *With the rapid advancement of diffusion-based generative models, portrait image animation has achieved remarkable results. However, it still faces challenges in temporally consistent video generation and fast sampling due to its iterative sampling nature. This paper presents FLOAT, an audio-driven talking portrait video generation method based on flow matching generative model. We shift the generative modeling from the pixel-based latent space to a learned motion latent space, enabling efficient design of temporally consistent motion. To achieve this, we introduce a transformer-based vector field predictor with a simple yet effective frame-wise conditioning mechanism. Additionally, our method supports speech-driven emotion enhancement, enabling a natural incorporation of expressive motions. Extensive experiments demonstrate that our method outperforms state-of-the-art audio-driven talking portrait methods in terms of visual quality, motion fidelity, and efficiency.*
+**Abstract**: *With the rapid advancement of diffusion-based generative models, portrait image animation has achieved remarkable results. However, it still faces challenges in temporally consistent video generation and fast sampling due to its iterative sampling nature. This paper presents FLOAT, an audio-driven talking portrait video generation method based on flow matching generative model. Instead of a pixel-based latent space, we take advantage of a learned orthogonal motion latent space, enabling efficient generation and editing of temporally consistent motion. To achieve this, we introduce a transformer-based vector field predictor with an effective frame-wise conditioning mechanism. Additionally, our method supports speech-driven emotion enhancement, enabling a natural incorporation of expressive motions. Extensive experiments demonstrate that our method outperforms state-of-the-art audio-driven talking portrait methods in terms of visual quality, motion fidelity, and efficiency.*
 
 **TL:DR: FLOAT is a flow matching based audio-driven talking portrait video generation method, which can enhance the speech-driven emotional motion.**
 
@@ -31,9 +31,10 @@ Our method runs faster than current diffusion-based methods with fewer sampling 
 
 
 ## Updates
-- [2025.02.17] The inference code and checkpoints are released under a **[Non-commercial License](https://creativecommons.org/licenses/by-nc-nd/4.0/)**.
-- [2024.12.03] Selected as a [HuggingFace Daily Papers](https://huggingface.co/papers?date=2024-12-03) on December 3, 2024. 
-- [2024.12.02] The paper is publicly available on [ArXiv](https://arxiv.org/abs/2412.01064).
+- [2025.06.26] 🎉🎉 FLOAT is accepted to **[ICCV 2025](https://iccv.thecvf.com)** 🎉🎉
+- [2025.02.17] The inference code and checkpoints are released under a **[Non-commercial License](https://creativecommons.org/licenses/by-nc-nd/4.0/)**
+- [2024.12.03] Selected as a [HuggingFace Daily Papers](https://huggingface.co/papers?date=2024-12-03) on December 3, 2024 
+- [2024.12.02] The paper is publicly available on [ArXiv](https://arxiv.org/abs/2412.01064)
 
 
 ## Getting Started
