@@ -150,15 +150,17 @@
       <h3> Generative Motion Latent Flow Matching for Audio-driven Talking Portrait</h3>
       <div style="margin-top: 15px;">
         <span style="margin-right: 15px; font-size: 1.3em;"><a href="https://taekyungki.github.io" target="_blank">Taekyung Ki<sup>1</sup></a></span>
-        <span style="margin-right: 15px; font-size: 1.3em;"><a href="https://kevinmin95.github.io" target="_blank">Dongchan Min<sup>2</sup></a></span>
-        <span style="margin-right: 15px; font-size: 1.3em;"><a href="https://www.aistudios.com/ko/home" target="_blank">Gyeongsu Chae<sup>1</sup></a></span>
+        <span style="margin-right: 15px; font-size: 1.3em;"><a href="https://kevinmin95.github.io" target="_blank">Dongchan Min<sup>1</sup></a></span>
+        <span style="margin-right: 15px; font-size: 1.3em;"><a href="https://www.aistudios.com/ko/home" target="_blank">Gyeongsu Chae<sup>2</sup></a></span>
       </div>
       <div style="margin-top: 15px;">
-        <span style="margin-right: 20px; font-size: 1.2em;"><sup>1</sup>DeepBrain AI Inc.</span>
-        <span style="margin-right: 20px; font-size: 1.2em;"><sup>2</sup>KAIST</span>
+        <span style="margin-right: 20px; font-size: 1.2em;"><sup>1</sup>KAIST</span>
+        <span style="margin-right: 20px; font-size: 1.2em;"><sup>2</sup>DeepBrain AI Inc.</span>
       </div>
-      <div>
-        <span style="margin-right: 10px; font-size: 1.3em;"> ArXiv 2024</span>
+      <div style="margin-top: 15px;">
+        <span style="font-size: 1.4em; font-weight: bold; color: navy;">
+          ICCV 2025
+        </span>
       </div>
     </div>
     <div class="text-center" style="font-size: 1.5em; margin-top: 25px;">
@@ -183,8 +185,8 @@
         With the rapid advancement of diffusion-based generative models, portrait image animation has achieved remarkable results.
         However, it still faces challenges in temporally consistent video generation and fast sampling due to its iterative sampling nature.
         This paper presents FLOAT, an audio-driven talking portrait video generation method based on flow matching generative model.
-        We shift the generative modeling from the pixel-based latent space to a learned motion latent space, enabling efficient design of temporally consistent motion.
-        To achieve this, we introduce a transformer-based vector field predictor with a simple yet effective frame-wise conditioning mechanism.
+        Instead of a pixel-based latent space, we take advantage of a learned orthogonal motion latent space, enabling efficient generation and editing of temporally consistent motion.
+        To achieve this, we introduce a transformer-based vector field predictor with an effective frame-wise conditioning mechanism.
         Additionally, our method supports speech-driven emotion enhancement, enabling a natural incorporation of expressive motions.
         Extensive experiments demonstrate that our method outperforms state-of-the-art audio-driven talking portrait methods in terms of visual quality, motion fidelity, and efficiency.
       </p>
@@ -261,6 +263,27 @@
           Your browser does not support the video tag.
         </video>
       </div>
+      <br><br>
+      <h4>Test Time Head Pose Editing using the Learned Orthonormal Basis</h4>
+      <p> Since FLOAT is trained on the learned orthonormal motion latent space, we can explicitly compute the motion coefficients from the sampled motion latents.
+        Given a sampled motion latent \( w_{r \to D'} = \) using the flow matching and the learned orthonormal basis \( V = \{\mathbf{v}_m\}_{m=1}^{M}\), 
+        we can assume that there exist \(\{\lambda_m (D')\}_{m=1}^{M}\) such that \(w_{r \to D'} = \sum_{m=1}^{M} \lambda_m (D')\cdot\mathbf{v}_m\) and can compute these motion coefficients 
+        \(\{\lambda_m (D')\}_{m=1}^{M}\) by
+        \[ \langle w_{r\to D'}, ~\mathbf{v}_k \rangle = \langle \sum_{m=1}^{M} \lambda_m (D') \cdot \mathbf{v}_m, ~\mathbf{v}_k \rangle = \lambda_k (D'), \]
+        as \(\langle \mathbf{v}_m, \mathbf{v}_k\rangle = \delta_{m,k}\) (\(\delta\) is Kronecker delta function).
+        This allows us to explicitly edit head motions at test time (e.g., modifying the primary direction of head movement), as shown in the below (please refer to the paper for more details):
+      </p>    
+      <div class="row">
+
+          <div class="col-md-12 col-sm-12 col-xs-12 gallery">
+            <div style="position: relative; padding-top: 0; overflow: hidden;">
+              <video controls style="display: block; width: 100%; height: auto;">
+                <source src="src/video/lambda_manipulation_15.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
 
 
       <br><br>
@@ -334,6 +357,48 @@
               <span class="sr-only">Previous</span>
             </a>
             <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <br><br>
+          <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
+            <p>We further compare our method with other diffusion-based approaches, EMO and VASA-1, using their demo videos since their official implementations are not publicly available. FLOAT can generate more dynamic head motions.</p>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="carousel-item">
+                  <video class="d-block w-100 video-fit" controls playsinline>
+                    <source src="./src/video/compare_vasa-1_01.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+  
+                <div class="carousel-item">
+                  <video class="d-block w-100 video-fit" controls playsinline>
+                    <source src="./src/video/compare_vasa-1_02.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+  
+                <video class="d-block w-100 video-fit" controls playsinline>
+                  <source src="./src/video/compare_emo_01.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+
+              </div>
+              <div class="carousel-item">
+                <video class="d-block w-100 video-fit" controls playsinline >
+                  <source src="./src/video/compare_emo_02.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls2" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls2" role="button" data-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="sr-only">Next</span>
             </a>
@@ -511,7 +576,10 @@
       <br>
       <br>
 
-
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+      </script>
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
