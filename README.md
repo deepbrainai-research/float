@@ -96,6 +96,7 @@ pip install -r requirements.txt
 - FLOAT is trained on the frontal head pose distributions. Non-frontal image may lead to suboptimal results.
 - The performance of taking portrait methods often depends on their training preprocess strategies, e.g., the field-of-view. The inference code includes an automatic face-cropping function, which may involve black **padding** regions. You can manually disable the cropping process in `generate.py`, however it may lead to suboptimal performance.
 - If your audio contains heavy background music, please use [ClearVoice](https://github.com/modelscope/ClearerVoice-Studio) to extract the vocals for better performance.
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TK0VpYdyLBCTXvMUMtL528zbxJsmCHi3?usp=sharing) for quick testing.
 
 
 1. Generating video 1 (Emotion from Audio)
