@@ -1,7 +1,7 @@
 """
 	Inference Stage 2
 """
-
+import os
 import os, torch, random, cv2, torchvision, subprocess, librosa, datetime, tempfile, face_alignment
 import numpy as np
 import albumentations as A
@@ -25,7 +25,10 @@ class DataProcessor:
 		self.fa = face_alignment.FaceAlignment(face_alignment.LandmarksType.TWO_D, flip_input=False)
 
 		# wav2vec2 audio preprocessor
-		self.wav2vec_preprocessor = Wav2Vec2FeatureExtractor.from_pretrained(opt.wav2vec_model_path, local_files_only=True)
+		if os.path.exists(opt.wav2vec_model_path):
+			    self.wav2vec_preprocessor = Wav2Vec2FeatureExtractor.from_pretrained(opt.wav2vec_model_path, local_files_only=True)
+		else:
+				self.wav2vec_preprocessor = Wav2Vec2FeatureExtractor.from_pretrained(opt.wav2vec_model_path)
 
 		# image transform 
 		self.transform = A.Compose([
@@ -173,9 +176,10 @@ class InferenceOptions(BaseOptions):
 		parser.add_argument('--res_video_path',
 				default=None, type=str, help='res video path')
 		parser.add_argument('--ckpt_path',
-				default="/home/nvadmin/workspace/taek/float-pytorch/checkpoints/float.pth", type=str, help='checkpoint path')
+				default="./checkpoints/float.pth", type=str, help='checkpoint path')
 		parser.add_argument('--res_dir',
 				default="./results", type=str, help='result dir')
+
 		return parser
 
 

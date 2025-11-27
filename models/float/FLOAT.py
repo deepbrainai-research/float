@@ -1,3 +1,4 @@
+import os
 import torch, math
 import torch.nn as nn
 import torch.nn.functional as F
@@ -184,8 +185,12 @@ class AudioEncoder(BaseModel):
 		
 		self.num_frames_for_clip = int(opt.wav2vec_sec * self.opt.fps)
 		self.num_prev_frames = int(opt.num_prev_frames)
+		if os.path.exists(opt.wav2vec_model_path):
 
-		self.wav2vec2 = Wav2VecModel.from_pretrained(opt.wav2vec_model_path, local_files_only = True)
+				self.wav2vec2 = Wav2VecModel.from_pretrained(opt.wav2vec_model_path, local_files_only = True)
+		else:
+				self.wav2vec2 = Wav2VecModel.from_pretrained(opt.wav2vec_model_path)
+
 		self.wav2vec2.feature_extractor._freeze_parameters()
 
 		for name, param in self.wav2vec2.named_parameters():
@@ -233,20 +238,38 @@ class AudioEncoder(BaseModel):
 class Audio2Emotion(nn.Module):
     def __init__(self, opt):
         super().__init__()
-        self.wav2vec2_for_emotion = Wav2Vec2ForSpeechClassification.from_pretrained(opt.audio2emotion_path, local_files_only=True)
+
+        # Load pretrained model (local preferred)
+        if os.path.exists(opt.audio2emotion_path):
+            self.wav2vec2_for_emotion = Wav2Vec2ForSpeechClassification.from_pretrained(
+                opt.audio2emotion_path,
+                local_files_only=True
+            )
+        else:
+            self.wav2vec2_for_emotion = Wav2Vec2ForSpeechClassification.from_pretrained(
+                opt.audio2emotion_path
+            )
+
         self.wav2vec2_for_emotion.eval()
-        
-		# seven labels
-        self.id2label = {0: "angry", 1: "disgust", 2: "fear", 3: "happy",
-						4: "neutral", 5: "sad", 6: "surprise"}
+
+        # seven labels
+        self.id2label = {
+            0: "angry",
+            1: "disgust",
+            2: "fear",
+            3: "happy",
+            4: "neutral",
+            5: "sad",
+            6: "surprise"
+        }
 
         self.label2id = {v: k for k, v in self.id2label.items()}
 
     @torch.no_grad()
     def predict_emotion(self, a: torch.Tensor, prev_a: torch.Tensor = None) -> torch.Tensor:
+        # Concatenate previous audio if provided
         if prev_a is not None:
             a = torch.cat([prev_a, a], dim=1)
-        logits = self.wav2vec2_for_emotion.forward(a).logits
-        return F.softmax(logits, dim=1) 	# scores
 
-#######################################################
+        logits = self.wav2vec2_for_emotion(a).logits
+        return F.softmax(logits, dim=1)

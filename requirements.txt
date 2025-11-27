@@ -1,14 +1,56 @@
-pyyaml
-opencv-python
-pandas
-tqdm
-matplotlib
-flow-vis
-librosa
+# Core Deep Learning - PyTorch Stack
+torch==2.0.1
+torchvision==0.15.2
+torchaudio==2.0.2
+
+# Core Dependencies
+numpy==1.24.4
+
+# Transformers & NLP
 transformers==4.30.2
+
+# Computer Vision
+opencv-python==4.8.0.74
+timm==1.0.9
+face-alignment==1.4.1
+
+# Image Augmentation
 albumentations==1.4.15
 albucore==0.0.16
-torchdiffeq==0.2.5
-timm==1.0.9
-face_alignment==1.4.1
+
+# Audio Processing
+librosa==0.10.1
+
+# Video Processing
 av==12.0.0
+
+# Math & Physics
+torchdiffeq==0.2.5
+
+# Data Processing & Visualization
+pandas==2.0.3
+matplotlib==3.7.2
+flow-vis==0.1
+pyyaml==6.0.1
+tqdm==4.65.0
+gdown==5.2.0
+
+# Web Interface - Gradio
+gradio==3.50.2
+# Web API
+fastapi==0.122.0
+hypercorn==0.15.0
+uvicorn==0.24.0
+
+# Async performance
+uvloop==0.19.0
+
+# WebSocket support
+websockets>=10.0,<12.0
+
+# HTTP client (if needed)
+httpx==0.25.1
+# Pydantic for data validation
+pydantic==2.7.0
+pydantic-settings==2.1.0
+matplotlib_inline==0.1.7
